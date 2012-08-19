@@ -513,8 +513,8 @@ tr td:last-child {
 @media screen and (max-width:28.125em) { /* 450px */
   th.optional,
   td.optional,
-  th.helpful,
-  td.helpful {
+  th.advisable,
+  td.advisable {
     display: none;
   }
 }
