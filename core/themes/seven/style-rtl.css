@@ -71,10 +71,8 @@ ul.primary {
 /**
  * Page layout.
  */
-#page {
-  padding: 20px 0 40px 0;
-  margin-left: 40px;
-  margin-right: 40px;
+#secondary-links ul.links li {
+  padding: 0 0 10px 10px;
 }
 ul.links li,
 ul.inline li {
