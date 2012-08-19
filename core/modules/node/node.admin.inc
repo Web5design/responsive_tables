@@ -447,7 +447,7 @@ function node_admin_nodes() {
     ),
     'author' => array(
       'data' => t('Author'),
-      'class' => array('helpful'),
+      'class' => array('advisable'),
     ),
     'status' => array(
       'data' => t('Status'),
@@ -516,7 +516,7 @@ function node_admin_nodes() {
       ),
       'author' => array(
         'data' => theme('username', array('account' => $node)),
-        'class' => array('helpful'),
+        'class' => array('advisable'),
       ),
       'status' => $node->status ? t('published') : t('not published'),
       'changed' => array(
