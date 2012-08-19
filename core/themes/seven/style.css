@@ -519,8 +519,8 @@ tr td:last-child {
   }
 }
 @media screen and (max-width:45em) { /* 720px */
-  th.optional,
-  td.optional {
+  th.helpful,
+  td.helpful {
     display: none;
   }
 }
