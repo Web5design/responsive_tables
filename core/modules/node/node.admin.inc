@@ -436,8 +436,8 @@ function node_admin_nodes() {
 
   // Build the sortable table header.
   $header = array(
-    'title' => array('data' => t('Title'), 'field' => 'n.title'),
-    'type' => array('data' => t('Content type'), 'field' => 'n.type'),
+    'title' => array('data' => t('Title'), 'field' => 'n.title', 'class' => array('persist', 'essential')),
+    'type' => array('data' => t('Content type'), 'field' => 'n.type', 'class' => array('optional')),
     'author' => t('Author'),
     'status' => array('data' => t('Status'), 'field' => 'n.status'),
     'changed' => array('data' => t('Updated'), 'field' => 'n.changed', 'sort' => 'desc')
@@ -445,7 +445,7 @@ function node_admin_nodes() {
   if ($multilingual) {
     $header['language_name'] = array('data' => t('Language'), 'field' => 'n.langcode');
   }
-  $header['operations'] = array('data' => t('Operations'));
+  $header['operations'] = array('data' => t('Operations'), 'class' => array('persist', 'essential'));
 
   $query = db_select('node', 'n')
     ->extend('Drupal\Core\Database\Query\PagerSelectExtender')
