@@ -510,21 +510,13 @@ function node_admin_nodes() {
           '#suffix' => ' ' . theme('mark', array('type' => node_mark($node->nid, $node->changed))),
         ),
       ),
-      'type' => array(
-        'data' => check_plain(node_type_get_name($node)),
-      ),
-      'author' => array(
-        'data' => theme('username', array('account' => $node)),
-      ),
+      'type' => check_plain(node_type_get_name($node)),
+      'author' => theme('username', array('account' => $node)),
       'status' => $node->status ? t('published') : t('not published'),
-      'changed' => array(
-        'data' => format_date($node->changed, 'short'),
-      ),
+      'changed' => format_date($node->changed, 'short'),
     );
     if ($multilingual) {
-      $options[$node->nid]['language_name'] = array(
-        'data' => language_name($node->langcode),
-      );
+      $options[$node->nid]['language_name'] = language_name($node->langcode);
     }
     // Build a list of all the accessible operations for the current node.
     $operations = array();
