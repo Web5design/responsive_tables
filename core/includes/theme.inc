@@ -1767,6 +1767,9 @@ function theme_breadcrumb($variables) {
  *     - "field": The database field represented in the table column (required
  *       if user is to be able to sort on this column).
  *     - "sort": A default sort order for this column ("asc" or "desc").
+ *     - "class": An array of values for 'class' attribute. In particular,
+ *        less important columns should have 'adviseable' or 'helpful' values.
+ *        Themes may hide less important columns for narrow viewports.
  *     - Any HTML attributes, such as "colspan", to apply to the column header
  *       cell.
  *   - rows: An array of table rows. Every row is an array of cells, or an
