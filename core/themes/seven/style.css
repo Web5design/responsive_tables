@@ -477,8 +477,23 @@ table.system-status-report tr.error {
 tr td:last-child {
   border-right: 1px solid #bebfb9; /* LTR */
 }
-
-
+/**
+ * Responsive tables
+ */
+@media (max-width:28.125em) { /* 450px */
+  th.optional,
+  td.optional,
+  th.helpful,
+  td.helpful {
+    display: none;
+  }
+}
+@media (max-width:45em) { /* 720px */
+  th.optional,
+  td.optional {
+    display: none;
+  }
+}
 /**
  * Fieldsets.
  *
