@@ -33,6 +33,16 @@ const MARK_NEW = 1;
 const MARK_UPDATED = 2;
 
 /**
+ * A responsive table class.
+ */
+const RWD_ADVISABLE = 'advisable';
+
+/**
+ * A responsive table class.
+ */
+const RWD_HELPFUL = 'helpful';
+
+/**
  * @} End of "defgroup content_flags".
  */
 
@@ -1919,12 +1929,12 @@ function theme_table($variables) {
       $i++;
 
       // Track responsive classes for each column as needed.
-      if (isset($cell['class'])) {
-        if (in_array('advisable', $cell['class'])) {
-          $responsive[$i] =  'advisable';
+      if (!empty($cell['class']) && is_array($cell['class'])) {
+        if (in_array(RWD_ADVISABLE, $cell['class'])) {
+          $responsive[$i] =  RWD_ADVISABLE;
         }
-        elseif (in_array('helpful', $cell['class'])) {
-          $responsive[$i] =  'helpful';
+        elseif (in_array(RWD_HELPFUL, $cell['class'])) {
+          $responsive[$i] =  RWD_HELPFUL;
         }
       }
 

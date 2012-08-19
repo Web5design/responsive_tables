@@ -917,8 +917,8 @@ function system_modules($form, $form_state = array()) {
       '#header' => array(
         array('data' => t('Enabled'), 'class' => array('checkbox')),
         t('Name'),
-        t('Version'),
-        t('Description'),
+        array('data' => t('Version'), 'class' => array(RWD_ADVISABLE)),
+        array('data' => t('Description'), 'class' => array(RWD_HELPFUL)),
         array('data' => t('Operations'), 'colspan' => 3),
       ),
       // Ensure that the "Core" package fieldset comes first.

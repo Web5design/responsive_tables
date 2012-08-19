@@ -443,26 +443,25 @@ function node_admin_nodes() {
     'type' => array(
       'data' => t('Content type'),
       'field' => 'n.type',
-      'class' => array('advisable'),
+      'class' => array(RWD_ADVISABLE),
     ),
     'author' => array(
       'data' => t('Author'),
-      'class' => array('helpful'),
+      'class' => array(RWD_HELPFUL),
     ),
     'status' => array(
       'data' => t('Status'),
       'field' => 'n.status',
-      'class' => array('advisable'),
     ),
     'changed' => array(
       'data' => t('Updated'),
       'field' => 'n.changed',
       'sort' => 'desc',
-      'class' => array('helpful')
+      'class' => array(RWD_HELPFUL)
     ,)
   );
   if ($multilingual) {
-    $header['language_name'] = array('data' => t('Language'), 'field' => 'n.langcode', 'class' => array('helpful'));
+    $header['language_name'] = array('data' => t('Language'), 'field' => 'n.langcode', 'class' => array(RWD_HELPFUL));
   }
   $header['operations'] = array('data' => t('Operations'));
 
