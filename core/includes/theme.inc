@@ -1917,7 +1917,7 @@ function theme_table($variables) {
 
       // Track responsive classes for each column as needed.
       if (isset($cell['class'])) {
-        if ($in_array('advisable', $cell['class'])) {
+        if (in_array('advisable', $cell['class'])) {
           $responsive[$i] =  'advisable';
         }
         elseif (in_array('helpful', $cell['class'])) {
