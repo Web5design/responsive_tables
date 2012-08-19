@@ -438,30 +438,31 @@ function node_admin_nodes() {
   $header = array(
     'title' => array(
       'data' => t('Title'),
-      'field' => 'n.title'
+      'field' => 'n.title',
     ),
     'type' => array(
       'data' => t('Content type'),
       'field' => 'n.type',
-      'class' => array('optional'),
+      'class' => array('advisable'),
     ),
     'author' => array(
       'data' => t('Author'),
-      'class' => array('advisable'),
+      'class' => array('helpful'),
     ),
     'status' => array(
       'data' => t('Status'),
-      'field' => 'n.status'
+      'field' => 'n.status',
+      'class' => array('advisable'),
     ),
     'changed' => array(
       'data' => t('Updated'),
       'field' => 'n.changed',
       'sort' => 'desc',
-      'class' => array('optional')
+      'class' => array('helpful')
     ,)
   );
   if ($multilingual) {
-    $header['language_name'] = array('data' => t('Language'), 'field' => 'n.langcode', 'class' => array('optional'));
+    $header['language_name'] = array('data' => t('Language'), 'field' => 'n.langcode', 'class' => array('helpful'));
   }
   $header['operations'] = array('data' => t('Operations'));
 
@@ -512,22 +513,18 @@ function node_admin_nodes() {
       ),
       'type' => array(
         'data' => check_plain(node_type_get_name($node)),
-        'class' => array('optional'),
       ),
       'author' => array(
         'data' => theme('username', array('account' => $node)),
-        'class' => array('advisable'),
       ),
       'status' => $node->status ? t('published') : t('not published'),
       'changed' => array(
         'data' => format_date($node->changed, 'short'),
-        'class' => array('optional'),
       ),
     );
     if ($multilingual) {
       $options[$node->nid]['language_name'] = array(
         'data' => language_name($node->langcode),
-        'class' => array('optional'),
       );
     }
     // Build a list of all the accessible operations for the current node.

@@ -1902,16 +1902,33 @@ function theme_table($variables) {
     $rows[] = array(array('data' => $empty, 'colspan' => $header_count, 'class' => array('empty', 'message')));
   }
 
+  // Track which columns are adviseable/helpful.
+  $responsive = array();
+
   // Format the table header:
   if (count($header)) {
     $ts = tablesort_init($header);
     // HTML requires that the thead tag has tr tags in it followed by tbody
     // tags. Using ternary operator to check and see if we have any rows.
     $output .= (count($rows) ? ' <thead><tr>' : ' <tr>');
+    $i=0;
     foreach ($header as $cell) {
+      $i++;
+
+      // Track responsive classes for each column as needed.
+      if (isset($cell['class'])) {
+        if ($in_array('advisable', $cell['class'])) {
+          $responsive[$i] =  'advisable';
+        }
+        elseif (in_array('helpful', $cell['class'])) {
+          $responsive[$i] =  'helpful';
+        }
+      }
+
       $cell = tablesort_header($cell, $header, $ts);
       $output .= _theme_table_cell($cell, TRUE);
     }
+
     // Using ternary operator to close the tags based on whether or not there are rows
     $output .= (count($rows) ? " </tr></thead>\n" : "</tr>\n");
   }
@@ -1952,7 +1969,20 @@ function theme_table($variables) {
         $output .= ' <tr' . drupal_attributes($attributes) . '>';
         $i = 0;
         foreach ($cells as $cell) {
-          $cell = tablesort_cell($cell, $header, $ts, $i++);
+          $i++;
+          // Add active class if needed for sortable tables.
+          $cell = tablesort_cell($cell, $header, $ts, $i);
+
+          // Copy advisable/helpful class from header to cell as needed.
+          if (isset($responsive[$i])) {
+            if (is_array($cell)) {
+              $cell['class'][] = $responsive[$i];
+            }
+            else {
+              $cell = array('data' => $cell, 'class' => $responsive[$i]);
+            }
+          }
+
           $output .= _theme_table_cell($cell);
         }
         $output .= " </tr>\n";
