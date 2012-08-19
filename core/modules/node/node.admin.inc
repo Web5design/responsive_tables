@@ -436,16 +436,34 @@ function node_admin_nodes() {
 
   // Build the sortable table header.
   $header = array(
-    'title' => array('data' => t('Title'), 'field' => 'n.title', 'class' => array('persist', 'essential')),
-    'type' => array('data' => t('Content type'), 'field' => 'n.type', 'class' => array('optional')),
-    'author' => t('Author'),
-    'status' => array('data' => t('Status'), 'field' => 'n.status'),
-    'changed' => array('data' => t('Updated'), 'field' => 'n.changed', 'sort' => 'desc')
+    'title' => array(
+      'data' => t('Title'),
+      'field' => 'n.title'
+    ),
+    'type' => array(
+      'data' => t('Content type'),
+      'field' => 'n.type',
+      'class' => array('optional'),
+    ),
+    'author' => array(
+      'data' => t('Author'),
+      'class' => array('helpful'),
+    ),
+    'status' => array(
+      'data' => t('Status'),
+      'field' => 'n.status'
+    ),
+    'changed' => array(
+      'data' => t('Updated'),
+      'field' => 'n.changed',
+      'sort' => 'desc',
+      'class' => array('optional')
+    ,)
   );
   if ($multilingual) {
-    $header['language_name'] = array('data' => t('Language'), 'field' => 'n.langcode');
+    $header['language_name'] = array('data' => t('Language'), 'field' => 'n.langcode', 'class' => array('optional'));
   }
-  $header['operations'] = array('data' => t('Operations'), 'class' => array('persist', 'essential'));
+  $header['operations'] = array('data' => t('Operations'));
 
   $query = db_select('node', 'n')
     ->extend('Drupal\Core\Database\Query\PagerSelectExtender')
@@ -492,13 +510,25 @@ function node_admin_nodes() {
           '#suffix' => ' ' . theme('mark', array('type' => node_mark($node->nid, $node->changed))),
         ),
       ),
-      'type' => check_plain(node_type_get_name($node)),
-      'author' => theme('username', array('account' => $node)),
+      'type' => array(
+        'data' => check_plain(node_type_get_name($node)),
+        'class' => array('optional'),
+      ),
+      'author' => array(
+        'data' => theme('username', array('account' => $node)),
+        'class' => array('helpful'),
+      ),
       'status' => $node->status ? t('published') : t('not published'),
-      'changed' => format_date($node->changed, 'short'),
+      'changed' => array(
+        'data' => format_date($node->changed, 'short'),
+        'class' => array('optional'),
+      ),
     );
     if ($multilingual) {
-      $options[$node->nid]['language_name'] = language_name($node->langcode);
+      $options[$node->nid]['language_name'] = array(
+        'data' => language_name($node->langcode),
+        'class' => array('optional'),
+      );
     }
     // Build a list of all the accessible operations for the current node.
     $operations = array();
