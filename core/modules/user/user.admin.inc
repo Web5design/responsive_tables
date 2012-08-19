@@ -145,10 +145,10 @@ function user_admin_account() {
 
   $header = array(
     'username' => array('data' => t('Username'), 'field' => 'u.name'),
-    'status' => array('data' => t('Status'), 'field' => 'u.status'),
-    'roles' => array('data' => t('Roles')),
-    'member_for' => array('data' => t('Member for'), 'field' => 'u.created', 'sort' => 'desc'),
-    'access' => array('data' => t('Last access'), 'field' => 'u.access'),
+    'status' => array('data' => t('Status'), 'field' => 'u.status', 'class' => array(RWD_HELPFUL)),
+    'roles' => array('data' => t('Roles'), 'class' => array(RWD_HELPFUL)),
+    'member_for' => array('data' => t('Member for'), 'field' => 'u.created', 'sort' => 'desc', 'class' => array(RWD_HELPFUL)),
+    'access' => array('data' => t('Last access'), 'field' => 'u.access', 'class' => array(RWD_HELPFUL)),
     'operations' => array('data' => t('Operations')),
   );
 
@@ -1051,4 +1051,3 @@ function user_admin_role_delete_confirm_submit($form, &$form_state) {
   drupal_set_message(t('The role has been deleted.'));
   $form_state['redirect'] = 'admin/people/roles';
 }
-
