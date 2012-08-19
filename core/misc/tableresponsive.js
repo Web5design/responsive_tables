@@ -4,7 +4,7 @@
 (function ($) {
   Drupal.behaviors.responsiveTable = {
     attach: function (context, settings) {
-      $(context).find('table').not('.sticky-header').once('responsivetable', function () {
+      $(context).find('table.responsive-enabled').not('.sticky-header').once('responsivetable', function () {
         $(this).data("drupal-responsive", new Drupal.responsiveTable(this));
       });
     }

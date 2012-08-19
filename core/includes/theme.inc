@@ -1850,6 +1850,7 @@ function theme_table($variables) {
   $caption = $variables['caption'];
   $colgroups = $variables['colgroups'];
   $sticky = $variables['sticky'];
+  $responsive = $variables['responsive'];
   $empty = $variables['empty'];
 
   // Add sticky headers, if applicable.
@@ -1859,6 +1860,13 @@ function theme_table($variables) {
     // This is needed to target tables constructed by this function.
     $attributes['class'][] = 'sticky-enabled';
   }
+  // If columns are hidden, add a link to show the columns.
+  //if (true || count($header) && $responsive) {
+    drupal_add_js('core/misc/tableresponsive.js');
+    // Add 'sticky-enabled' class to the table to identify it for JS.
+    // This is needed to target tables constructed by this function.
+    $attributes['class'][] = 'responsive-enabled';
+  //}
 
   $output = '<table' . drupal_attributes($attributes) . ">\n";
 
