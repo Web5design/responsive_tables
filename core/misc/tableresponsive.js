@@ -91,9 +91,11 @@
           var $row = $(this);
           var $cells = $row.find('td:eq(' + position + ')');
           $cells.show();
+          // Keep track of the revealed cells, so they can be hidden later.
           self.$revealedCells = $().add(self.$revealedCells).add($cells);
         });
         $header.show();
+        // Keep track of the revealed headers, so they can be hidden later.
         self.$revealedCells = $().add(self.$revealedCells).add($header);
         
         
@@ -120,15 +122,16 @@
         for (var i = 0; i < properties.length; i++) {
           var prop = properties[i]
           prop.trim();
+          // Find the display:none property and remove it.
           var isDisplayNone = /^display\s*\:\s*none$/.exec(prop);
           if (isDisplayNone) {
             continue;
           }
           newProps.push(prop);
         }
+        // Return the rest of the style attribute values to the element.
         $cell.attr('style', newProps.join(';'));
       });
-      // Find the display:none property and remove it.
       delete this.$revealedCells;
       this.$columnToggle.data('drupal-tableresponsive').sticky = false;
       // Refresh the toggle link.
