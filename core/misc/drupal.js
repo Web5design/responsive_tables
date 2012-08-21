@@ -169,7 +169,7 @@ Drupal.checkWidthBreakpoint = function (width) {
  *
  * Use this function to prevent frequent calls to functions, for
  * example like event handlers attached to the resize event.
- * 
+ *
  * To use debounce, pass your function to debounce as the first argument
  * and the waiting period as the second.
  *

@@ -1863,7 +1863,7 @@ function theme_table($variables) {
   // If columns are hidden, add a link to show the columns.
   if (count($header) && $responsive) {
     drupal_add_js('core/misc/tableresponsive.js');
-    // Add 'sticky-enabled' class to the table to identify it for JS.
+    // Add 'responsive-enabled' class to the table to identify it for JS.
     // This is needed to target tables constructed by this function.
     $attributes['class'][] = 'responsive-enabled';
   }
@@ -1923,9 +1923,7 @@ function theme_table($variables) {
     $rows[] = array(array('data' => $empty, 'colspan' => $header_count, 'class' => array('empty', 'message')));
   }
 
-  // Track which columns are adviseable/helpful.
   $responsive = array();
-
   // Format the table header:
   if (count($header)) {
     $ts = tablesort_init($header);

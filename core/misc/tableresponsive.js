@@ -41,14 +41,14 @@
     // Store a reference to the header elements of the table so that the DOM is
     // traversed only once to find them.
     this.$headers = this.$table.find('th');
-    // Attach a resize hanlder to the window to check when 
+    // Attach a resize hanlder to the window to check when
     $(window)
       .bind('resize.drupal-tableresponsivetable', Drupal.debounce($.proxy(this, 'eventhandlerEvaluateColumnVisibility'), 250))
       .triggerHandler('resize.drupal-tableresponsivetable');
   };
   /**
    * Associates an action link with the table will show hidden columns. Columns are assumed
-   * to be hidden if their header's display property is none or if the visibility 
+   * to be hidden if their header's display property is none or if the visibility
    * property is hidden.
    */
   Drupal.responsiveTable.prototype.eventhandlerEvaluateColumnVisibility = function (event) {
@@ -97,8 +97,8 @@
         $header.show();
         // Keep track of the revealed headers, so they can be hidden later.
         self.$revealedCells = $().add(self.$revealedCells).add($header);
-        
-        
+
+
       });
       this.$columnToggle.text(this.hideText);
       this.$columnToggle.data('drupal-tableresponsive').sticky = true;
