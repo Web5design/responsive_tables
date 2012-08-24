@@ -1862,7 +1862,7 @@ function theme_table($variables) {
   }
   // If columns are hidden, add a link to show the columns.
   if (count($header) && $responsive) {
-    drupal_add_js('core/misc/tableresponsive.js');
+    drupal_add_library('system', 'drupal.tableresponsive');
     // Add 'responsive-enabled' class to the table to identify it for JS.
     // This is needed to target tables constructed by this function.
     $attributes['class'][] = 'responsive-enabled';

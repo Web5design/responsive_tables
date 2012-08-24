@@ -20,10 +20,10 @@
   /**
    * A responsive table hides columns at small screen sizes, leaving the most
    * important columns visible to the end user. Users should not be prevented from
-   * access all columns, however. This Class adds a toggle to a table with hidden
-   * columns that will expose the columns. Exposing the columns will most likely
-   * break layouts, but it provides the user with a means to access data, which is
-   * guiding principle of responsive design.
+   * accessing all columns, however. This class adds a toggle to a table with
+   * hidden columns that exposes the columns. Exposing the columns will likely
+   * break layouts, but it provides the user with a means to access data, which
+   * is a guiding principle of responsive design.
    */
   Drupal.responsiveTable = function (table) {
     var self = this;
@@ -41,15 +41,15 @@
     // Store a reference to the header elements of the table so that the DOM is
     // traversed only once to find them.
     this.$headers = this.$table.find('th');
-    // Attach a resize hanlder to the window to check when
+    // Attach a resize handler to the window.
     $(window)
       .bind('resize.drupal-tableresponsivetable', Drupal.debounce($.proxy(this, 'eventhandlerEvaluateColumnVisibility'), 250))
       .triggerHandler('resize.drupal-tableresponsivetable');
   };
   /**
-   * Associates an action link with the table will show hidden columns. Columns are assumed
-   * to be hidden if their header's display property is none or if the visibility
-   * property is hidden.
+   * Associates an action link with the table that will show hidden columns.
+   * Columns are assumed to be hidden if their header's display property is none
+   * or if the visibility property is hidden.
    */
   Drupal.responsiveTable.prototype.eventhandlerEvaluateColumnVisibility = function (event) {
     var self = this;
@@ -58,7 +58,7 @@
     var $hiddenHeaders = $headers.filter(':hidden');
     var hiddenLength = $hiddenHeaders.length;
     var toggleData = $toggle.data('drupal-tableresponsive');
-    // if the table has hidden columns, associated an action link with the table
+    // If the table has hidden columns, associate an action link with the table
     // to show the columns.
     if (hiddenLength > 0) {
       $toggle

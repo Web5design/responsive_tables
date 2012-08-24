@@ -1241,6 +1241,15 @@ function system_library_info() {
     ),
   );
 
+  // Drupal's debounce API.
+  $libraries['drupal.debounce'] = array(
+    'title' => 'Drupal debounce API',
+    'version' => VERSION,
+    'js' => array(
+      'core/misc/debounce.js' => array('group' => JS_DEFAULT, 'cache' => FALSE),
+    ),
+  );
+
   // Drupal's progress indicator.
   $libraries['drupal.progress'] = array(
     'title' => 'Drupal progress indicator',
@@ -1277,6 +1286,18 @@ function system_library_info() {
     ),
     'dependencies' => array(
       array('system', 'jquery.cookie'),
+    ),
+  );
+
+  // Drupal's responsive table API.
+  $libraries['drupal.tableresponsive'] = array(
+    'title' => 'Drupal responsive table API',
+    'version' => VERSION,
+    'js' => array(
+      'core/misc/tableresponsivejs' => array('group' => JS_DEFAULT, 'cache' => FALSE),
+    ),
+    'dependencies' => array(
+      array('system', 'drupal.debounce'),
     ),
   );
 
