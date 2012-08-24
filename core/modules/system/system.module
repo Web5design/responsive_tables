@@ -1294,7 +1294,7 @@ function system_library_info() {
     'title' => 'Drupal responsive table API',
     'version' => VERSION,
     'js' => array(
-      'core/misc/tableresponsivejs' => array('group' => JS_DEFAULT, 'cache' => FALSE),
+      'core/misc/tableresponsive.js' => array('group' => JS_DEFAULT, 'cache' => FALSE),
     ),
     'dependencies' => array(
       array('system', 'drupal.debounce'),
