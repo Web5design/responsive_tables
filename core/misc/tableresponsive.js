@@ -55,7 +55,7 @@
     var self = this;
     var $headers = this.$headers;
     var $toggle = this.$columnToggle;
-    var $hiddenHeaders = $headers.filter(':hidden');
+    var $hiddenHeaders = $headers.filter('.advisable:hidden, .helpful:hidden');
     var hiddenLength = $hiddenHeaders.length;
     var toggleData = $toggle.data('drupal-tableresponsive');
     // If the table has hidden columns, associate an action link with the table
@@ -65,7 +65,7 @@
       .insertBefore(this.$table);
     }
     // When the toggle is sticky, its presence is maintained because the user has
-    // interacted with it. This is the necessary to keep the link visible if the user
+    // interacted with it. This is necessary to keep the link visible if the user
     // adjusts screen size and changes the visibilty of columns.
     if ((!('sticky' in toggleData) && hiddenLength === 0) || ('sticky' in toggleData && !toggleData.sticky && hiddenLength === 0)) {
       $toggle.detach();
@@ -80,7 +80,7 @@
     event.preventDefault();
     var self = this;
     var $headers = this.$headers;
-    var $hiddenHeaders = this.$headers.filter(':hidden');
+    var $hiddenHeaders = this.$headers.filter('.advisable:hidden, .helpful:hidden');
     this.$revealedCells = this.$revealedCells || $();
     // Reveal hidden columns.
     if ($hiddenHeaders.length > 0) {
@@ -119,11 +119,12 @@
         // returned to the same state it was in before the columns were
         // revealed, so it is necessary to remove the display none
         // value from the style attribute.
+        var match =  /^display\s*\:\s*none$/;
         for (var i = 0; i < properties.length; i++) {
           var prop = properties[i]
           prop.trim();
           // Find the display:none property and remove it.
-          var isDisplayNone = /^display\s*\:\s*none$/.exec(prop);
+          var isDisplayNone = match.exec(prop);
           if (isDisplayNone) {
             continue;
           }
