@@ -136,8 +136,18 @@ div.tree-child-horizontal {
   text-align: right; /* LTR */
 }
 
+
 /**
- * TableHeader behavior.
+ * Table behavior.
+ *
+ * @see core/misc/table.js
+ */
+.table-actions > a {
+  margin-right: 1.5em; /* LTR */
+}
+
+/**
+ * Tableheader behavior.
  *
  * @see tableheader.js
  */

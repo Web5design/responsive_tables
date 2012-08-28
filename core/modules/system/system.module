@@ -1246,7 +1246,7 @@ function system_library_info() {
     'title' => 'Drupal debounce API',
     'version' => VERSION,
     'js' => array(
-      'core/misc/debounce.js' => array('group' => JS_DEFAULT, 'cache' => FALSE),
+      'core/misc/debounce.js' => array('group' => JS_LIBRARY),
     ),
   );
 
@@ -1282,7 +1282,7 @@ function system_library_info() {
     'title' => 'Drupal table API',
     'version' => VERSION,
     'js' => array(
-      'core/misc/table.js' => array('group' => JS_DEFAULT,),
+      'core/misc/table.js' => array('group' => JS_LIBRARY,),
     ),
   );
 
@@ -1291,7 +1291,10 @@ function system_library_info() {
     'title' => 'Drupal tableheader API',
     'version' => VERSION,
     'js' => array(
-      'core/misc/tableheader.js' => array('group' => JS_DEFAULT,),
+      'core/misc/tableheader.js' => array('group' => JS_LIBRARY,),
+    ),
+    'dependencies' => array(
+      array('system', 'drupal.table',),
     ),
   );
 
@@ -1300,10 +1303,11 @@ function system_library_info() {
     'title' => 'Drupal tabledrag',
     'version' => VERSION,
     'js' => array(
-      'core/misc/tabledrag.js' => array('group' => JS_LIBRARY, 'weight' => -1),
+      'core/misc/tabledrag.js' => array('group' => JS_LIBRARY, 'cache' => FALSE),
     ),
     'dependencies' => array(
-      array('system', 'jquery.cookie'),
+      array('system', 'jquery.cookie',),
+      array('system', 'drupal.table',),
     ),
   );
 
@@ -1312,10 +1316,11 @@ function system_library_info() {
     'title' => 'Drupal responsive table API',
     'version' => VERSION,
     'js' => array(
-      'core/misc/tableresponsive.js' => array('group' => JS_DEFAULT,),
+      'core/misc/tableresponsive.js' => array('group' => JS_LIBRARY,),
     ),
     'dependencies' => array(
-      array('system', 'drupal.debounce'),
+      array('system', 'drupal.debounce',),
+      array('system', 'drupal.table',),
     ),
   );
 

@@ -28,7 +28,7 @@
   Drupal.tableResponsive = function (table) {
     var self = this;
     this.$table = $(table);
-    var table = this.$table.data('drupal-table');
+    this.table = this.$table.data('drupal-table');
     this.showText = Drupal.t('Show all columns');
     this.hideText = Drupal.t('Hide unimportant columns');
     // Store a reference to the header elements of the table so that the DOM is
@@ -46,7 +46,7 @@
       'callback': $.proxy(this, 'eventhandlerToggleColumns')
     };
     // Add the toggle to the table's control bar.
-    this.$columnToggle = table.addAction([this.actionLink]);
+    this.$columnToggle = this.table.addAction([this.actionLink]);
     this.$columnToggle.data('drupal-tableresponsive', {});
     // Attach a resize handler to the window.
     $(window)

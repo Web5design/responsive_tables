@@ -44,7 +44,8 @@ Drupal.tableDrag = function (table, tableSettings) {
   var $table = $(table);
 
   // Required object variables.
-  this.table = table;
+  this.$table = $(table);
+  this.table = this.$table.data('drupal-table');
   this.tableSettings = tableSettings;
   this.dragObject = null; // Used to hold information about a current drag operation.
   this.rowObject = null; // Provides operations for row manipulation.
@@ -52,7 +53,9 @@ Drupal.tableDrag = function (table, tableSettings) {
   this.oldY = 0; // Used to determine up or down direction from last mouse move.
   this.changed = false; // Whether anything in the entire table has changed.
   this.maxDepth = 0; // Maximum amount of allowed parenting.
-  this.rtl = $(this.table).css('direction') === 'rtl' ? -1 : 1; // Direction of the table.
+  this.rtl = this.$table.css('direction') === 'rtl' ? -1 : 1; // Direction of the table.
+  this.showText = Drupal.t('Show row weights');
+  this.hideText = Drupal.t('Hide row weights');
 
   // Configure the scroll settings.
   this.scrollSettings = { amount: 4, interval: 50, trigger: 70 };
@@ -92,16 +95,22 @@ Drupal.tableDrag = function (table, tableSettings) {
   // Match immediate children of the parent element to allow nesting.
   $table.find('> tr.draggable, > tbody > tr.draggable').each(function () { self.makeDraggable(this); });
 
-  // Add a link before the table for users to show or hide weight columns.
-  $table.before($('<a href="#" class="tabledrag-toggle-weight"></a>')
-    .attr('title', Drupal.t('Re-order rows by numerical weight instead of dragging.'))
-    .click($.proxy(function (e) {
-      e.preventDefault();
-      this.toggleColumns();
-    }, this))
-    .wrap('<div class="tabledrag-toggle-weight-wrapper"></div>')
-    .parent()
-  );
+  // Build a link before the table for users to show or hide weight columns.
+  this.actionLink = {
+    'text': this.showText,
+    'attributes': {
+      'title': Drupal.t('Re-order rows by numerical weight instead of dragging.'),
+      'class': 'tabledrag-toggle-weight',
+    },
+    'namespace': 'drupal-tabledrag',
+    'callback': $.proxy(function (event) {
+        event.preventDefault();
+        this.toggleColumns();
+      }, this)
+  };
+  // Add the toggle to the table's control bar.
+  this.$columnToggle = this.table.addAction([this.actionLink]);
+  this.$columnToggle.data('drupal-tabledrag', {});
 
   // Initialize the specified columns (for example, weight or parent columns)
   // to show or hide according to user preference. This aids accessibility
@@ -133,7 +142,7 @@ Drupal.tableDrag = function (table, tableSettings) {
  * 'Drupal.tableDrag.showWeight' localStorage value.
  */
 Drupal.tableDrag.prototype.initColumns = function () {
-  var $table = $(this.table);
+  var $table = this.$table;
   for (var group in this.tableSettings) {
     // Find the first field in this group.
     for (var d in this.tableSettings[group]) {
@@ -227,7 +236,7 @@ Drupal.tableDrag.prototype.hideColumns = function () {
     this.colSpan = this.colSpan - 1;
   });
   // Change link text.
-  $('.tabledrag-toggle-weight').text(Drupal.t('Show row weights'));
+  $('.tabledrag-toggle-weight').text(this.showText);
 };
 
 /**
@@ -245,7 +254,7 @@ Drupal.tableDrag.prototype.showColumns = function () {
     this.colSpan = this.colSpan + 1;
   });
   // Change link text.
-  $('.tabledrag-toggle-weight').text(Drupal.t('Hide row weights'));
+  $('.tabledrag-toggle-weight').text(this.hideText);
 };
 
 /**
@@ -751,7 +760,7 @@ Drupal.tableDrag.prototype.updateField = function (changedRow, group) {
       // Use the first row in the table as source, because it's guaranteed to
       // be at the root level. Find the first item, then compare this row
       // against it as a sibling.
-      sourceRow = $(this.table).find('tr.draggable:first').get(0);
+      sourceRow = this.$table.find('tr.draggable:first').get(0);
       if (sourceRow === this.rowObject.element) {
         sourceRow = $(this.rowObject.group[this.rowObject.group.length - 1]).next('tr.draggable').get(0);
       }
@@ -873,7 +882,7 @@ Drupal.tableDrag.prototype.restripeTable = function () {
   // :even and :odd are reversed because jQuery counts from 0 and
   // we count from 1, so we're out of sync.
   // Match immediate children of the parent element to allow nesting.
-  $(this.table).find('> tbody > tr.draggable:visible, > tr.draggable:visible')
+  this.$table.find('> tbody > tr.draggable:visible, > tr.draggable:visible')
     .removeClass('odd even')
     .filter(':odd').addClass('even').end()
     .filter(':even').addClass('odd');

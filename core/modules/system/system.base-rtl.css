@@ -29,6 +29,13 @@
 }
 
 /**
+ * Table behavior.
+ */
+.table-actions > a {
+  margin-left: 1.5em;
+  margin-right: 0;
+}
+/**
  * TableDrag behavior.
  */
 .draggable a.tabledrag-handle {
