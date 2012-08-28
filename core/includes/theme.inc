@@ -1852,10 +1852,12 @@ function theme_table($variables) {
   $sticky = $variables['sticky'];
   $responsive = $variables['responsive'];
   $empty = $variables['empty'];
-
+  
+  // Add the standard table behaviors.
+  drupal_add_library('system', 'drupal.table');
   // Add sticky headers, if applicable.
   if (count($header) && $sticky) {
-    drupal_add_js('core/misc/tableheader.js');
+    drupal_add_library('system', 'drupal.tableheader');
     // Add 'sticky-enabled' class to the table to identify it for JS.
     // This is needed to target tables constructed by this function.
     $attributes['class'][] = 'sticky-enabled';

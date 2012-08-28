@@ -28,19 +28,26 @@
   Drupal.responsiveTable = function (table) {
     var self = this;
     this.$table = $(table);
+    var table = this.$table.data('drupal-table');
     this.showText = Drupal.t('Show all columns');
     this.hideText = Drupal.t('Hide unimportant columns');
-    // Build a link that will toggle the column visibility.
-    this.$columnToggle = $('<a>', {
-      'href': '#',
-      'text': this.showText,
-      'class': 'responsive-table-toggle'
-    })
-    .data('drupal-tableresponsive', {})
-    .bind('click.drupal-tableresponsivetable', $.proxy(this, 'eventhandlerToggleColumns'));
     // Store a reference to the header elements of the table so that the DOM is
     // traversed only once to find them.
     this.$headers = this.$table.find('th');
+    // Build a link that will toggle the column visibility.
+    this.actionLink = {
+      'text': this.showText,
+      'attributes': {
+        'title': Drupal.t('Expose table cells that were hidden to make the table fit within a small screen.'),
+        'class': 'responsive-table-toggle',
+        'aria-disabled': 'false'
+      },
+      'namespace': 'drupal-tableresponsivetable',
+      'callback': $.proxy(this, 'eventhandlerToggleColumns')
+    };
+    // Add the toggle to the table's control bar.
+    this.$columnToggle = table.addAction([this.actionLink]);
+    this.$columnToggle.data('drupal-tableresponsive', {});
     // Attach a resize handler to the window.
     $(window)
       .bind('resize.drupal-tableresponsivetable', Drupal.debounce($.proxy(this, 'eventhandlerEvaluateColumnVisibility'), 250))
@@ -62,13 +69,17 @@
     // to show the columns.
     if (hiddenLength > 0) {
       $toggle
-      .insertBefore(this.$table);
+      .show()
+      .attr('aria-disabled', 'false');
+      
     }
     // When the toggle is sticky, its presence is maintained because the user has
     // interacted with it. This is necessary to keep the link visible if the user
     // adjusts screen size and changes the visibilty of columns.
     if ((!('sticky' in toggleData) && hiddenLength === 0) || ('sticky' in toggleData && !toggleData.sticky && hiddenLength === 0)) {
-      $toggle.detach();
+      $toggle
+      .hide()
+      .attr('aria-disabled', 'true');
       delete this.$columnToggle.data('drupal-tableresponsive').sticky;
     }
   };

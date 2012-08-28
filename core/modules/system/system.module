@@ -1277,6 +1277,24 @@ function system_library_info() {
     ),
   );
 
+  // Drupal's table library.
+  $libraries['drupal.table'] = array(
+    'title' => 'Drupal table API',
+    'version' => VERSION,
+    'js' => array(
+      'core/misc/table.js' => array('group' => JS_DEFAULT,),
+    ),
+  );
+
+  // Drupal's tableheader library.
+  $libraries['drupal.tableheader'] = array(
+    'title' => 'Drupal tableheader API',
+    'version' => VERSION,
+    'js' => array(
+      'core/misc/tableheader.js' => array('group' => JS_DEFAULT,),
+    ),
+  );
+
   // Drupal's tabledrag library.
   $libraries['drupal.tabledrag'] = array(
     'title' => 'Drupal tabledrag',
@@ -1294,7 +1312,7 @@ function system_library_info() {
     'title' => 'Drupal responsive table API',
     'version' => VERSION,
     'js' => array(
-      'core/misc/tableresponsive.js' => array('group' => JS_DEFAULT, 'cache' => FALSE),
+      'core/misc/tableresponsive.js' => array('group' => JS_DEFAULT,),
     ),
     'dependencies' => array(
       array('system', 'drupal.debounce'),
