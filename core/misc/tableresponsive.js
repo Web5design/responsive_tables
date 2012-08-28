@@ -8,12 +8,12 @@
 "use strict";
 
   /**
-   * Attach the responsiveTable function to Drupal.behaviors.
+   * Attach the tableResponsive function to Drupal.behaviors.
    */
-  Drupal.behaviors.responsiveTable = {
+  Drupal.behaviors.tableResponsive = {
     attach: function (context, settings) {
       $(context).find('table.responsive-enabled').once('tableresponsive', function () {
-        $(this).data("drupal-tableresponsive", new Drupal.responsiveTable(this));
+        $(this).data("drupal-tableresponsive", new Drupal.tableResponsive(this));
       });
     }
   };
@@ -25,7 +25,7 @@
    * break layouts, but it provides the user with a means to access data, which
    * is a guiding principle of responsive design.
    */
-  Drupal.responsiveTable = function (table) {
+  Drupal.tableResponsive = function (table) {
     var self = this;
     this.$table = $(table);
     var table = this.$table.data('drupal-table');
@@ -42,7 +42,7 @@
         'class': 'responsive-table-toggle',
         'aria-disabled': 'false'
       },
-      'namespace': 'drupal-tableresponsivetable',
+      'namespace': 'drupal-tableresponsive',
       'callback': $.proxy(this, 'eventhandlerToggleColumns')
     };
     // Add the toggle to the table's control bar.
@@ -50,15 +50,15 @@
     this.$columnToggle.data('drupal-tableresponsive', {});
     // Attach a resize handler to the window.
     $(window)
-      .bind('resize.drupal-tableresponsivetable', Drupal.debounce($.proxy(this, 'eventhandlerEvaluateColumnVisibility'), 250))
-      .triggerHandler('resize.drupal-tableresponsivetable');
+      .bind('resize.drupal-tableresponsive', Drupal.debounce($.proxy(this, 'eventhandlerEvaluateColumnVisibility'), 250))
+      .triggerHandler('resize.drupal-tableresponsive');
   };
   /**
    * Associates an action link with the table that will show hidden columns.
    * Columns are assumed to be hidden if their header's display property is none
    * or if the visibility property is hidden.
    */
-  Drupal.responsiveTable.prototype.eventhandlerEvaluateColumnVisibility = function (event) {
+  Drupal.tableResponsive.prototype.eventhandlerEvaluateColumnVisibility = function (event) {
     var self = this;
     var $headers = this.$headers;
     var $toggle = this.$columnToggle;
@@ -87,7 +87,7 @@
    * Reveal hidden columns and hide any columns that were revealed because they were
    * previously hidden.
    */
-  Drupal.responsiveTable.prototype.eventhandlerToggleColumns = function (event) {
+  Drupal.tableResponsive.prototype.eventhandlerToggleColumns = function (event) {
     event.preventDefault();
     var self = this;
     var $headers = this.$headers;
@@ -148,7 +148,7 @@
       this.$columnToggle.data('drupal-tableresponsive').sticky = false;
       // Refresh the toggle link.
       $(window)
-      .triggerHandler('resize.drupal-tableresponsivetable');
+      .triggerHandler('resize.drupal-tableresponsive');
     }
   };
 })(jQuery);
