@@ -34,13 +34,17 @@
   /**
    * Add a link to perform an action on the table to the list of table actions.
    *
-   * @param action: action may be an object or an array of action objects.
+   * @param actions: actions may be an object or an array of action objects.
    * An action object has the following structure:
    *
    * action = {
+   *   'href': 'url',
    *   'text': 'string',
-   *   'title': 'title attribute description',
-   *   'callback': fn
+   *   'attributes': {
+   *     'title': 'title attribute description',
+   *     'class': 'string of classes'
+   *   },
+   *   'callback': function () {}
    * };
    */
   Drupal.Table.prototype.addAction = function (actions) {
@@ -64,10 +68,11 @@
         var attributes = $.extend({}, ('attributes' in action && typeof action.attributes === 'object') ? action.attributes : {});
         this.$actionsContainer.append(
           link = $('<a>', {
-            'href': '#',
+            'href': ('href' in action) ? action.href : '#',
             'text': ('text' in action) ? Drupal.t(action.text) : Drupal.t('No text provided'),
             'title': ('title' in attributes) ? Drupal.t(attributes.title) : '',
             'class': ('class' in attributes) ? attributes['class'] : '',
+            // Aria information.
             'role': 'button',
           })
           .on({
