@@ -1,4 +1,6 @@
 /**
+ * @file debounce.js
+ *
  * Returns a function that will not invoked while it continues to be called,
  * until the wait period has experied without a call to the function.
  *
@@ -12,22 +14,27 @@
  * the wait time has elapsed instead of after, once the debounce-wrapped function
  * ceases to be called.
  */
-Drupal.debounce = function (fn, wait, immediate) {
-  var timeout;
-  return function () {
-    var context = this;
-    var args = arguments;
-    var deferred = function () {
-      timeout = null;
-      if (!immediate) {
+(function (Drupal, undefined) {
+
+"use strict";
+
+  Drupal.debounce = function (fn, wait, immediate) {
+    var timeout;
+    return function () {
+      var context = this;
+      var args = arguments;
+      var deferred = function () {
+        timeout = null;
+        if (!immediate) {
+          fn.apply(context, args);
+        }
+      };
+      var invoke = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(deferred, wait);
+      if (invoke) {
         fn.apply(context, args);
       }
     };
-    var invoke = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(deferred, wait);
-    if (invoke) {
-      fn.apply(context, args);
-    }
   };
-};
+})(Drupal);
